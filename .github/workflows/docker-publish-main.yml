@@ -28,4 +28,4 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/bombg/sassbot:${{env.IMAGEVER}}
-          platforms: linux/arm64, linux/amd64
+          platforms: linux/arm64
