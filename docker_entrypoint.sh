@@ -8,6 +8,7 @@ rm /tmp/.X1-lock -f
 Xvfb :1 -screen 0 640x480x8 -nolisten tcp &
 
 # Execute CMDs
+printf '%(%Y-%m-%d %H:%M:%S)T: attempting to start main\n' -1
 python main.py -vvv
 
 printf '%(%Y-%m-%d %H:%M:%S)T: Stopped container\n' -1
