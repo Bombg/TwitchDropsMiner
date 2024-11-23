@@ -72,5 +72,5 @@ ENTRYPOINT ["./docker_entrypoint.sh"]
 # # Healthcheck
 # HEALTHCHECK --interval=10s --timeout=5s --start-period=1m --retries=3 CMD ["./healthcheck.sh"]
 
-# Default command
-CMD ["sh", "-c", "python main.py -vvv"]
+# # Default command
+# CMD ["sh", "-c", "python main.py -vvv"]
