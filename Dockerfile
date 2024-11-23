@@ -67,7 +67,6 @@ ENV PRIORITY_MODE=1
 ENV TDM_DOCKER=true
 
 # Set the entrypoint and default command
-RUN chmod +x docker-entrypoint.sh
 ENTRYPOINT ["/bin/sh", "-c", "./docker-entrypoint.sh"]
 
 # # Healthcheck
