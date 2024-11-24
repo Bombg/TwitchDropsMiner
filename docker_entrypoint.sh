@@ -9,6 +9,6 @@ Xvfb :1 -screen 0 640x480x8 -nolisten tcp &
 
 # Execute CMDs
 printf '%(%Y-%m-%d %H:%M:%S)T: attempting to start main\n' -1
-python main.py -vvv
+python -u ./main.py 2>&1
 
 printf '%(%Y-%m-%d %H:%M:%S)T: Stopped container\n' -1
