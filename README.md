@@ -1,3 +1,7 @@
+# Fork info
+
+Mainly made to generate docker images to be compatible with arm64. Had trouble with health check code so I've disabled it.
+
 # Twitch Drops Miner -- Docker
 
 Thanks to @DevilXD and other contributors from the [original repo](https://github.com/DevilXD/TwitchDropsMiner) for the vast majority of the code.
