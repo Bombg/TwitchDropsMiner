@@ -113,7 +113,7 @@ URLType = NewType("URLType", str)
 TopicProcess: TypeAlias = "abc.Callable[[int, JsonType], Any]"
 # Values
 MAX_INT = sys.maxsize
-BASE_TOPICS = 3
+BASE_TOPICS = 2
 MAX_WEBSOCKETS = 8
 WS_TOPICS_LIMIT = 50
 TOPICS_PER_CHANNEL = 2
@@ -124,8 +124,8 @@ DEFAULT_LANG = "English"
 # Intervals and Delays
 PING_INTERVAL = timedelta(minutes=3)
 PING_TIMEOUT = timedelta(seconds=10)
-ONLINE_DELAY = timedelta(seconds=20)
-WATCH_INTERVAL = timedelta(seconds=20)
+ONLINE_DELAY = timedelta(seconds=120)
+WATCH_INTERVAL = timedelta(seconds=59)
 # Strings
 WINDOW_TITLE = f"Twitch Drops Miner v{__version__} (by DevilXD)"
 # Logging
@@ -164,7 +164,7 @@ class ClientType:
         "kimne78kx3ncx6brgo4mv6wki5h1ko",
         (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-            "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+            "(KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
         ),
     )
     MOBILE_WEB = ClientInfo(
@@ -174,49 +174,75 @@ class ClientType:
             # Chrome versioning is done fully on android only,
             # other platforms only use the major version
             (
-                "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/130.0.6723.102 Mobile Safari/537.36"
+                "Mozilla/5.0 (Linux; Android 16) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/138.0.7204.158 Mobile Safari/537.36"
             ),
             (
-                "Mozilla/5.0 (Linux; Android 13; SM-A205U) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/130.0.6723.102 Mobile Safari/537.36"
+                "Mozilla/5.0 (Linux; Android 16; SM-A205U) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/138.0.7204.158 Mobile Safari/537.36"
             ),
             (
-                "Mozilla/5.0 (Linux; Android 13; SM-A102U) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/130.0.6723.102 Mobile Safari/537.36"
+                "Mozilla/5.0 (Linux; Android 16; SM-A102U) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/138.0.7204.158 Mobile Safari/537.36"
             ),
             (
-                "Mozilla/5.0 (Linux; Android 13; SM-G960U) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/130.0.6723.102 Mobile Safari/537.36"
+                "Mozilla/5.0 (Linux; Android 16; SM-G960U) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/138.0.7204.158 Mobile Safari/537.36"
             ),
             (
-                "Mozilla/5.0 (Linux; Android 13; SM-N960U) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/130.0.6723.102 Mobile Safari/537.36"
+                "Mozilla/5.0 (Linux; Android 16; SM-N960U) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/138.0.7204.158 Mobile Safari/537.36"
             ),
             (
-                "Mozilla/5.0 (Linux; Android 13; LM-Q720) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/130.0.6723.102 Mobile Safari/537.36"
+                "Mozilla/5.0 (Linux; Android 16; LM-Q720) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/138.0.7204.158 Mobile Safari/537.36"
             ),
             (
-                "Mozilla/5.0 (Linux; Android 13; LM-X420) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/130.0.6723.102 Mobile Safari/537.36"
+                "Mozilla/5.0 (Linux; Android 16; LM-X420) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/138.0.7204.158 Mobile Safari/537.36"
             ),
         ]
     )
     ANDROID_APP = ClientInfo(
         URL("https://www.twitch.tv"),
         "kd1unb4b3q4t58fwlpcbzcbnm76a8fp",
-        (
-            "Dalvik/2.1.0 (Linux; U; Android 7.1.2; SM-G977N Build/LMY48Z) "
-            "tv.twitch.android.app/16.8.1/1608010"
-        ),
+        [
+            (
+                "Dalvik/2.1.0 (Linux; U; Android 16; SM-S911B Build/TP1A.220624.014) "
+                "tv.twitch.android.app/25.3.0/2503006"
+            ),
+            (
+                "Dalvik/2.1.0 (Linux; U; Android 16; SM-S938B Build/BP2A.250605.031) "
+                "tv.twitch.android.app/25.3.0/2503006"
+            ),
+            (
+                "Dalvik/2.1.0 (Linux; Android 16; SM-X716N Build/UP1A.231005.007) "
+                "tv.twitch.android.app/25.3.0/2503006"
+            ),
+            (
+                "Dalvik/2.1.0 (Linux; U; Android 15; SM-G990B Build/AP3A.240905.015.A2) "
+                "tv.twitch.android.app/25.3.0/2503006"
+            ),
+            (
+                "Dalvik/2.1.0 (Linux; U; Android 15; SM-G970F Build/AP3A.241105.008) "
+                "tv.twitch.android.app/25.3.0/2503006"
+            ),
+            (
+                "Dalvik/2.1.0 (Linux; U; Android 15; SM-A566E Build/AP3A.240905.015.A2) "
+                "tv.twitch.android.app/25.3.0/2503006"
+            ),
+            (
+                "Dalvik/2.1.0 (Linux; U; Android 14; SM-X306B Build/UP1A.231005.007) "
+                "tv.twitch.android.app/25.3.0/2503006"
+            ),
+        ]
     )
     SMARTBOX = ClientInfo(
         URL("https://android.tv.twitch.tv"),
         "ue6666qo983tsx6so1t0vnawi233wa",
         (
             "Mozilla/5.0 (Linux; Android 7.1; Smart Box C1) AppleWebKit/537.36 "
-            "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+            "(KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
         ),
     )
 
@@ -265,7 +291,7 @@ GQL_OPERATIONS: dict[str, GQLOperation] = {
     # returns stream information for a particular channel
     "GetStreamInfo": GQLOperation(
         "VideoPlayerStreamInfoOverlayChannel",
-        "a5f2e34d626a9f4f5c0204f910bab2194948a9502089be558bb6e779a9e1b3d2",
+        "198492e0857f6aedead9665c81c5a06d67b25b58034649687124083ff288597d",
         variables={
             "channel": ...,  # channel login
         },
@@ -294,7 +320,7 @@ GQL_OPERATIONS: dict[str, GQLOperation] = {
     # returns current state of points (balance, claim available) for a particular channel
     "ChannelPointsContext": GQLOperation(
         "ChannelPointsContext",
-        "1530a003a7d374b0380b79db0be0534f30ff46e61cffa2bc0e2468a909fbc024",
+        "374314de591e69925fce3ddc2bcf085796f56ebb8cad67a0daa3165c03adc345",
         variables={
             "channelLogin": ...,  # channel login
         },
@@ -302,7 +328,7 @@ GQL_OPERATIONS: dict[str, GQLOperation] = {
     # returns all in-progress campaigns
     "Inventory": GQLOperation(
         "Inventory",
-        "09acb7d3d7e605a92bdfdcc465f6aa481b71c234d8686a9ba38ea5ed51507592",
+        "d86775d0ef16a63a33ad52e80eaff963b2d5b72fada7c991504a57496e1d8e4b",
         variables={
             "fetchRewardCampaigns": False,
         }
@@ -336,7 +362,7 @@ GQL_OPERATIONS: dict[str, GQLOperation] = {
     # returns drops available for a particular channel
     "AvailableDrops": GQLOperation(
         "DropsHighlightService_AvailableDrops",
-        "eff13f4a43157238e40b4cd74b0dac3a41b5f8fb31de1a3b19347fae84e60b92",
+        "9a62a09bce5b53e26e64a671e530bc599cb6aab1e5ba3cbd5d85966d3940716f",
         variables={
             "channelID": ...,  # channel ID as a str
         },
@@ -374,7 +400,6 @@ GQL_OPERATIONS: dict[str, GQLOperation] = {
                 "requestID": "JIRA-VXP-2397",
             },
             "includeIsDJ": False,
-            "includePreviewBlur": True,
             "sortTypeIsRecency": False,
         },
     ),
@@ -387,14 +412,14 @@ GQL_OPERATIONS: dict[str, GQLOperation] = {
     ),
     "NotificationsView": GQLOperation(  # unused, triggers notifications "update-summary"
         "OnsiteNotifications_View",
-        "f6bdb1298f376539487f28b7f8a6b5d7434ec04ba4d7dc5c232b258410ae04d6",
+        "e8e06193f8df73d04a1260df318585d1bd7a7bb447afa058e52095513f2bfa4f",
         variables={
             "input": {},
         },
     ),
     "NotificationsList": GQLOperation(  # unused
         "OnsiteNotifications_ListNotifications",
-        "e709b905ddb963d7cf4a8f6760148926ecbd0eee0f2edc48d1cf17f3e87f6490",
+        "11cdb54a2706c2c0b2969769907675680f02a6e77d8afe79a749180ad16bfea6",
         variables={
             "cursor": "",
             "displayType": "VIEWER",

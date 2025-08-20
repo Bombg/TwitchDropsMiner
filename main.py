@@ -4,6 +4,7 @@ from __future__ import annotations
 from multiprocessing import freeze_support
 from datetime import datetime
 import os
+from time import time
 
 if __name__ == "__main__":
     print(f"{datetime.now().strftime('%Y-%m-%d %X')}: Starting: Twitch Drops Miner")
@@ -18,7 +19,7 @@ if __name__ == "__main__":
     import traceback
     import tkinter as tk
     from tkinter import messagebox
-    from typing import IO, NoReturn
+    from typing import NoReturn, TYPE_CHECKING
 
     import truststore
     truststore.inject_into_ssl()
@@ -31,7 +32,13 @@ if __name__ == "__main__":
     from utils import lock_file, resource_path, set_root_icon
     from constants import LOGGING_LEVELS, SELF_PATH, FILE_FORMATTER, LOG_PATH, LOCK_PATH
 
+    if TYPE_CHECKING:
+        from _typeshed import SupportsWrite
+
     warnings.simplefilter("default", ResourceWarning)
+
+    # import tracemalloc
+    # tracemalloc.start(3)
 
     if sys.version_info < (3, 10):
         raise RuntimeError("Python 3.10 or higher is required")
@@ -41,7 +48,7 @@ if __name__ == "__main__":
             super().__init__(*args, **kwargs)
             self._message: io.StringIO = io.StringIO()
 
-        def _print_message(self, message: str, file: IO[str] | None = None) -> None:
+        def _print_message(self, message: str, file: SupportsWrite[str] | None = None) -> None:
             self._message.write(message)
             # print(message, file=self._message)
 
@@ -164,9 +171,6 @@ if __name__ == "__main__":
             client.prevent_close()
             client.print("Fatal error encountered:\n")
             client.print(traceback.format_exc())
-            if os.getenv('TDM_DOCKER'):
-                  with open('healthcheck.exitstate', 'w') as f:
-                    f.write('Container is Unhealthy')
         finally:
             if sys.platform == "linux":
                 loop.remove_signal_handler(signal.SIGINT)

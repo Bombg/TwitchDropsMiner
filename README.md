@@ -2,7 +2,7 @@
 
 Thanks to @DevilXD and other contributors from the [original repo](https://github.com/DevilXD/TwitchDropsMiner) for the vast majority of the code.
 
-This application allows you to AFK mine timed Twitch drops, without having to worry about switching channels when the one you were watching goes offline, claiming the drops, or even receiving the stream data itself. This helps both you and Twitch save on bandwidth and hassle. Everyone wins!
+This application allows you to AFK mine timed Twitch drops, without having to worry about switching channels when the one you were watching goes offline, claiming the drops, or even receiving the stream data itself. This helps you save on bandwidth and hassle.
 
 ### How It Works:
 
@@ -12,8 +12,8 @@ Every several seconds, the application pretends to watch a particular stream by 
 
 - Stream-less drop mining - save on bandwidth.
 - Game priority and exclusion lists, allowing you to focus on mining what you want, in the order you want, and ignore what you don't want.
-- Sharded websocket connection, allowing for tracking up to `(8*50-2)//2=199` channels at the same time.
-- Automatic drop campaigns discovery based on linked accounts (requires you to do [account linking](https://www.twitch.tv/drops/campaigns) yourself though)
+- Sharded websocket connection, allowing for tracking up to `199` channels at the same time.
+- Automatic drop campaigns discovery based on linked accounts (requires you to do [account linking](https://www.twitch.tv/drops/campaigns) yourself though).
 - Stream tags and drop campaign validation, to ensure you won't end up mining a stream that can't earn you the drop.
 - Automatic channel stream switching, when the one you were currently watching goes offline, as well as when a channel streaming a higher priority game goes online.
 - Login session is saved in a cookies file, so you don't need to login every time.
@@ -139,23 +139,25 @@ Every several seconds, the application pretends to watch a particular stream by 
 ### Notes:
 
 > [!WARNING]
-> Requires Python 3.10 or higher.
+> Due to how Twitch handles the drop progression on their side, watching a stream in the browser (or by any other means) on the same account that is actively being used by the miner, will usually cause the miner to misbehave, reporting false progress and getting stuck mining the current drop.
+>
+> Using the same account to watch other streams during mining is thus discouraged, in order to avoid any problems arising from it.
 
 > [!CAUTION]
-> Persistent cookies will be stored in the `cookies.jar` file, from which the authorization (login) information will be restored on each subsequent run. Make sure to keep your cookies file safe, as the authorization information it stores can give another person access to your Twitch account.
+> Persistent cookies will be stored in the `cookies.jar` file, from which the authorization (login) information will be restored on each subsequent run. Make sure to keep your cookies file safe, as the authorization information it stores can give another person access to your Twitch account, even without them knowing your password!
 
 > [!IMPORTANT]
-> Successfully logging into your Twitch account in the application may cause Twitch to send you a "New Login" notification email. This is normal - you can verify that it comes from your own IP address. The detected browser during the login will be "Chrome", as that's what the miner currently presents itself as internally.
-
-> [!NOTE]
-> The miner uses an OAuth login flow to let you authorize it to use your account. This is done by entering the code printed in the miner's Output window on the [Twitch device activation page](https://www.twitch.tv/activate). If you'd ever wish to unlink the miner from your Twitch account, head over to the [connections page,](https://www.twitch.tv/settings/connections) where you should be able to find the miner in the "Other connections" section. It will be listed as "Twitch Mobile Web". Simply click on "Disconnect" to remove the link and invalidate the authorization token.
+> Successfully logging into your Twitch account in the application may cause Twitch to send you a "New Login" notification email. This is normal - you can verify that it comes from your own IP address. The detected browser during the login will be "Chrome", as that's what the miner currently presents itself to the Twitch server.
 
 > [!NOTE]
 > The time remaining timer always countdowns a single minute and then stops - it is then restarted only after the application redetermines the remaining time. This "redetermination" can happen at any time Twitch decides to report on the drop's progress, but not later than 20 seconds after the timer reaches zero. The seconds timer is only an approximation and does not represent nor affect actual mining speed. The time variations are due to Twitch sometimes not reporting drop progress at all, or reporting progress for the wrong drop - these cases have all been accounted for in the application though.
 
+> [!NOTE]
+> The source code requires Python 3.10 or higher to run.
+
 ### Notes about the Windows build:
 
-- To achieve a portable-executable format, the application is packaged with PyInstaller into an `EXE`. Some non-mainstream antivirus engines might report the packaged executable as a trojan, because PyInstaller has been used by others to package malicious Python code in the past. These reports can be safely ignored. If you absolutely do not trust the executable, you'll have to install Python yourself and run everything from source.
+- To achieve a portable-executable format, the application is packaged with PyInstaller into an `EXE`. Some antivirus engines (including Windows Defender) might report the packaged executable as a trojan, because PyInstaller has been used by others to package malicious Python code in the past. These reports can be safely ignored. If you absolutely do not trust the executable, you'll have to install Python yourself and run everything from source.
 - The executable uses the `%TEMP%` directory for temporary runtime storage of files, that don't need to be exposed to the user (like compiled code and translation files). For persistent storage, the directory the executable resides in is used instead.
 - The autostart feature is implemented as a registry entry to the current user's (`HKCU`) autostart key. It is only altered when toggling the respective option. If you relocate the app to a different directory, the autostart feature will stop working, until you toggle the option off and back on again
 
@@ -163,7 +165,7 @@ Every several seconds, the application pretends to watch a particular stream by 
 
 - The Linux app is built and distributed using two distinct portable-executable formats: [AppImage](https://appimage.org/) and [PyInstaller](https://pyinstaller.org/).
 - There are no major differences between the two formats, but if you're looking for a recommendation, use the AppImage.
-- The Linux app should work out of the box on any modern distribution, as long as it has `glibc>=2.31` (PyInstaller package) or `glibc>=2.35` (AppImage package), plus a working display server.
+- The Linux app should work out of the box on any modern distribution, as long as it has `glibc>=2.35`, plus a working display server.
 - Every feature of the app is expected to work on Linux just as well as it does on Windows. If you find something that's broken, please [open a new issue](https://github.com/DevilXD/TwitchDropsMiner/issues/new).
 - The size of the Linux app is significantly larger than the Windows app due to the inclusion of the `gtk3` library (and its dependencies), which is required for proper system tray/notifications support.
 - As an alternative to the native Linux app, you can run the Windows app via [Wine](https://www.winehq.org/) instead. It works really well!
@@ -215,29 +217,33 @@ For more context about these goals, please check out these issues: [#161](https:
 ### Credits:
 
 <!---
-Note: When adding a new credits line below, please add two spaces at the end of the previous line,
-if they aren't already there. Doing so ensures proper markdown rendering on Github.
+Note: The translations credits are sorted alphabetically, based on their English language name.
+When adding a new entry, please ensure to insert it in the correct place in the second section.
+Non-translations related credits should be added to the first section instead.
 
-• Last line can have them omitted.
-• Please ensure your editor won't trim the spaces upon saving the file.
 • Please leave a single empty new line at the end of the file.
 -->
 
-| Contributor            | Translation                                      |
-|------------------------|--------------------------------------------------|
-| @Suz1e                 | Chinese (Simplified) - 简体中文                   |
-| @wwj010                | Chinese (Simplified) - Corrections and Revisions |
-| @nwvh                  | Czech - Čeština                                  |
-| @ThisIsCyreX           | German - Deutsch                                 |
-| @Shofuu                | Spanish - Español                                |
-| @zarigata              | Portuguese - Português                           |
-| @alikdb                | Turkish - Türkçe                                 |
-| @roobini-gamer         | French - Français                                |
-| @Sergo1217             | Russian - Русский                                |
-| @Ricky103403           | Chinese (Traditional) - 繁體中文                  |
-| @Patriot99 & @DevilXD  | Polish - Polski                                  |
-| @Nollasko              | Ukrainian - Українська                           |
-| @casungo               | Italian - Italiano                               |
-| @Bamboozul             | Arabic - العربية                                 |
-| @Kjerne                | Danish - Dansk                                   |
-| @ShimadaNanaki         | Japanese - 日本語                                 |
+| **Contributor**        | **Translation**                                                         |
+|------------------------|-------------------------------------------------------------------------|
+| @guihkx                | CI script, CI maintenance, Linux builds                                 |
+| @Bamboozul             | Arabic ( العربية )                                                      |
+| @Suz1e                 | Chinese ( 简体中文 ) translation and revisions                           |
+| @wwj010                | Chinese ( 简体中文 ) translation corrections and revisions               |
+| @zhangminghao1989      | Chinese ( 简体中文 ) translation corrections and revisions               |
+| @Ricky103403           | Traditional Chinese ( 繁體中文 )                                         |
+| @LusTerCsI             | Traditional Chinese ( 繁體中文 ) corrections and revisions               |
+| @nwvh                  | Czech ( Čeština )                                                       |
+| @Kjerne                | Danish ( Dansk )                                                        |
+| @roobini-gamer         | French ( Français )                                                     |
+| @Calvineries           | For the French (Français) translation revisions                         |
+| @ThisIsCyreX           | German ( Deutsch )                                                      |
+| @Eriza-Z               | Indonesian                                                              |
+| @casungo               | Italian ( Italiano )                                                    |
+| @ShimadaNanaki         | Japanese ( 日本語 )                                                      |
+| @Patriot99             | Polish ( Polski ) translation and revisions (co-authored with @DevilXD) |
+| @zarigata              | Portuguese ( Português )                                                |
+| @Sergo1217             | Russian ( Русский )                                                      |
+| @Shofuu                | Spanish ( Español ) translation and revisions                           |
+| @alikdb                | Turkish ( Türkçe )                                                      |
+| @Nollasko              | Ukrainian ( Українська ) translation and revisions                       |
