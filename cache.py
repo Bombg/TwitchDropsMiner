@@ -32,16 +32,6 @@ class ExpiringHash(TypedDict):
 Hashes = Dict[URLType, ExpiringHash]
 default_database: Hashes = {}
 
-class CurrentSeconds:
-    LIFETIME = timedelta(days=7)
-
-    def set_current_seconds(value):
-        global current_seconds
-        current_seconds = value
-
-    def get_current_seconds():
-        return current_seconds
-
 class ImageCache:
     LIFETIME = timedelta(days=7)
 
@@ -115,8 +105,15 @@ class ImageCache:
                     except (FileNotFoundError, Image_module.UnidentifiedImageError):
                         pass
             if image is None:
-                async with self._twitch.request("GET", url) as response:
-                    image = Image_module.open(io.BytesIO(await response.read()))
+                try:
+                    async with self._twitch.request("GET", url) as response:
+                        if response.status != 404:
+                            image = Image_module.open(io.BytesIO(await response.read()))
+                except Exception:
+                    pass
+                if image is None:
+                    # use a blank white image as a fallback
+                    image = Image_module.new("RGB", (10, 10), (255, 255, 255))
                 img_hash = self._hash(image)
                 self._images[img_hash] = image
                 image.save(CACHE_PATH / img_hash)

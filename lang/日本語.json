@@ -134,8 +134,15 @@
         "autostart": "自動起動：",
         "tray": "トレイに自動起動：",
         "tray_notifications": "トレイ通知：",
+        "dark_mode": "ダークモード：",
         "priority_only": "優先のみ：",
         "proxy": "プロキシ（再起動が必要）："
+      },
+      "advanced": {
+        "name": "詳細",
+        "enable_badges_emotes": "バッジとエモートの部分的なサポートを有効にする：",
+        "available_drops_check": "利用可能なドロップの追加チェックを有効にする：",
+        "unlinked_campaigns": "リンクされていないキャンペーンを許可："
       },
       "game_name": "ゲーム名",
       "priority": "優先度",

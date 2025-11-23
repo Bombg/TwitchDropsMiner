@@ -134,8 +134,15 @@
                 "autostart": "Avvio automatico: ",
                 "tray": "Avvio automatico nella barra delle applicazioni: ",
                 "tray_notifications": "Notifiche: ",
+                "dark_mode": "Modalità scura: ",
                 "priority_only": "Solo priorità: ",
                 "proxy": "Proxy (richiede il riavvio):"
+            },
+            "advanced": {
+                "name": "Avanzate",
+                "enable_badges_emotes": "Abilita supporto parziale per badge ed emote: ",
+                "available_drops_check": "Abilita controllo aggiuntivo drop disponibili: ",
+                "unlinked_campaigns": "Consenti campagne non collegate: "
             },
             "game_name": "Nome del gioco",
             "priority": "Priorità",

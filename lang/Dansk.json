@@ -135,8 +135,14 @@
                 "tray": "Automatisk start i systembakken: ",
                 "tray_notifications": "Bakkemeddelelser: ",
                 "priority_only": "Kun prioritet: ",
-                "unlinked_campaigns": "Tillad ikke-linkede kampagner: ",
+                "dark_mode": "Mørk tilstand: ",
                 "proxy": "Proxy (kræver genstart):"
+            },
+            "advanced": {
+                "name": "Avanceret",
+                "enable_badges_emotes": "Aktivér delvis support for badges og emotes: ",
+                "available_drops_check": "Aktivér ekstra tilgængelig drops kontrol: ",
+                "unlinked_campaigns": "Tillad ikke-linkede kampagner: "
             },
             "game_name": "Spilnavn",
             "priority": "Prioritet",

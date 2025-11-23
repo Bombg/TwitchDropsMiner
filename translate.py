@@ -161,10 +161,15 @@ class GUISettingsGeneral(TypedDict):
     autostart: str
     tray: str
     tray_notifications: str
+    dark_mode: str
     priority_mode: str
     unlinked_campaigns: str
     proxy: str
 
+class GUISettingsAdvanced(TypedDict):
+    name: str
+    enable_badges_emotes: str
+    available_drops_check: str
 
 class GUIPriorityModes(TypedDict):
     priority_only: str
@@ -174,6 +179,7 @@ class GUIPriorityModes(TypedDict):
 
 class GUISettings(TypedDict):
     general: GUISettingsGeneral
+    advanced: GUISettingsAdvanced
     priority_modes: GUIPriorityModes
     game_name: str
     priority: str
@@ -362,9 +368,15 @@ default_translation: Translation = {
                 "autostart": "Autostart: ",
                 "tray": "Autostart into tray: ",
                 "tray_notifications": "Tray notifications: ",
+                "dark_mode": "Dark mode: ",
                 "priority_mode": "Priority mode: ",
-                "unlinked_campaigns": "Allow Unlinked Campaigns: ",
                 "proxy": "Proxy (requires restart):",
+            },
+            "advanced": {
+                "name": "Advanced",
+                "enable_badges_emotes": "Enable partial support for badges and emotes: ",
+                "available_drops_check": "Enable extra available drops check: ",
+                "unlinked_campaigns": "Allow Unlinked Campaigns: ",
             },
             "priority_modes": {
                 "priority_only": "Priority list only",

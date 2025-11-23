@@ -9,6 +9,7 @@ env/
 venv/
 cache/
 appimage/
+log/
 
 # Ignore common archive and executable files
 *.exe
@@ -24,6 +25,7 @@ appimage/
 *.tmp
 log.txt
 lock.file
+*.log
 
 # Ignore Python-related files
 .mypy_cache/
