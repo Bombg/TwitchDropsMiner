@@ -22,6 +22,7 @@ Every several seconds, the application pretends to watch a particular stream by 
 - Automatic channel stream switching, when the one you were currently watching goes offline, as well as when a channel streaming a higher priority game goes online.
 - Login session is saved in a cookies file, so you don't need to login every time.
 - Mining is automatically started as new campaigns appear, and stopped when the last available drops have been mined.
+- Optional Apprise notifications for claimed drops.
 
 <details>
   <summary><h3>Usage (click for dropdown)</h3></summary>
@@ -74,6 +75,8 @@ Every several seconds, the application pretends to watch a particular stream by 
      Configure the container with environment variables to customize its behavior:
 
      - **Allow Unlinked Campaigns:** Set the `UNLINKED_CAMPAIGNS` environment variable to `1` to ENABLE mining drops from campaigns that are not linked to your account. By default, this is set to `0` (disabled). Note that even when unlinked campaigns are enabled, the application will still consider your priority list, so ensure the desired game is included in your priority list.
+
+      - **Apprise URLs:** Set the `APPRISE_URL` environment variable to a comma list of Apprise URLs (e.g., Discord webhooks, email, etc.).
 
      - **Priority Mode:** Set the `PRIORITY_MODE` environment variable to one of the following values to determine how the miner prioritizes campaigns:
        - `0`: **Use the priority list directly.** Campaigns are mined in the exact order they appear in the priority list, without additional prioritization.
@@ -178,9 +181,26 @@ Every several seconds, the application pretends to watch a particular stream by 
 - The size of the Linux app is significantly larger than the Windows app due to the inclusion of the `gtk3` library (and its dependencies), which is required for proper system tray/notifications support.
 - As an alternative to the native Linux app, you can run the Windows app via [Wine](https://www.winehq.org/) instead. It works really well!
 
+### Notes about the macOS build:
+
+- The macOS version is packaged using PyInstaller into a standalone `.app` bundle, distributed as a ZIP archive.
+- Since this application is not signed with a paid Apple Developer Certificate, **macOS Gatekeeper will block it** on the first run (saying it "The application is damaged and can't be opened").
+  - **To fix this**: Either open the Terminal in the folder the app is in (or navigating with `cd path/to/folder`) and enter `xattr -cr Twitch Drops Miner (by DevilXD).app` or just type `xattr -cr ` (make sure to put a space at the end), drag and drop the `Twitch Drops Miner (by DevilXD).app` file into the terminal window (this will auto-fill the path) and enter
+- Persistent files (like `cookies.jar`, `settings.json`, `lock.file` and the `cache` folder) are stored inside the application bundle in `Twitch Drops Miner (by DevilXD).app/Contents/MacOS` (to access them Right-click the application and select `Show Package Contents`)
+
 ### Advanced Usage:
 
 If you'd be interested in running the latest master from source or building your own executable, see the wiki page explaining how to do so: https://github.com/DevilXD/TwitchDropsMiner/wiki/Setting-up-the-environment,-building-and-running
+
+### Support
+
+If you encounter any issues with the miner:
+
+- Please see the [troubleshooting page](https://github.com/DevilXD/TwitchDropsMiner/wiki/Troubleshooting) for some common issues and their explanation.  
+- Please search the [issues page](https://github.com/DevilXD/TwitchDropsMiner/issues?q=sort%3Aupdated-desc%20is%3Aissue) or [issues page](https://github.com/JourneyDocker/TwitchDropsMiner/issues?q=sort%3Aupdated-desc%20is%3Aissue) to see if your issue hasn't been reported yet.  
+- **Before reporting a new issue**, please test the original version to see if the problem happens there as well:
+  - If the issue occurs on the original upstream version, please report it on the DevilXD repo.
+  - If the issue is **only** present on this version, please report the issue on my repo.
 
 ### Project goals:
 

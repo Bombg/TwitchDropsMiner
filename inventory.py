@@ -3,7 +3,12 @@ from __future__ import annotations
 import re
 import math
 import logging
-import pystray
+
+try:
+    import pystray
+except ImportError:
+    from types import SimpleNamespace as _NS
+    pystray = _NS(Icon=_NS(HAS_MENU=False))
 from enum import Enum
 from itertools import chain
 from typing import TYPE_CHECKING
@@ -14,7 +19,7 @@ from translate import _
 from channel import Channel
 from utils import timestamp, Game
 from exceptions import GQLException
-from constants import GQL_OPERATIONS, MAX_EXTRA_MINUTES, URLType, State
+from constants import GQL_QUERIES, MAX_EXTRA_MINUTES, URLType, State
 
 if TYPE_CHECKING:
     from collections import abc
@@ -180,6 +185,7 @@ class BaseDrop:
             )
             if pystray.Icon.HAS_MENU:
                 self._twitch.gui.tray.notify(claim_text, _("gui", "tray", "notification_title"))
+            self._twitch.notifications.notify_drop(self)
         else:
             logger.error(f"Drop claim has potentially failed! Drop ID: {self.id}")
         return result
@@ -194,7 +200,7 @@ class BaseDrop:
             return False
         try:
             response = await self._twitch.gql_request(
-                GQL_OPERATIONS["ClaimDrop"].with_variables(
+                GQL_QUERIES["ClaimDrop"].with_variables(
                     {"input": {"dropInstanceID": self.claim_id}}
                 )
             )
@@ -299,7 +305,7 @@ class TimedDrop(BaseDrop):
         self._twitch.gui.inv.update_drop(self)
 
     def _update_real_minutes(self, delta: int) -> None:
-        if delta == 0 or self.real_current_minutes + delta < 0 or not self.can_earn():
+        if delta == 0 or self.real_current_minutes + delta < 0:
             return
         if self.real_current_minutes + delta < self.required_minutes:
             self.real_current_minutes += delta
@@ -397,15 +403,10 @@ class DropsCampaign:
 
     @property
     def eligible(self) -> bool:
-        has_badge_or_emote = self.has_badge_or_emote
-        badge_emote_allowed = self._twitch.settings.enable_badges_emotes
-        if self._twitch.settings.unlinked_campaigns:
-            return (
-                self.linked
-                or (self.unlinked and not has_badge_or_emote)
-                or (badge_emote_allowed and has_badge_or_emote)
-            )
-        return self.linked or (badge_emote_allowed and has_badge_or_emote)
+        settings = self._twitch.settings
+        if self.has_badge_or_emote:
+            return settings.enable_badges_emotes
+        return self.linked or (self.unlinked and settings.unlinked_campaigns)
 
     @cached_property
     def has_badge_or_emote(self) -> bool:
